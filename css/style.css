@@ -290,3 +290,25 @@ body { background: var(--sky), var(--bg); }
   .hs .glow { opacity: .16; }
   #pollen { display: none; }
 }
+
+/* ================= painted floating island ================= */
+#world { animation: bob 7s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+.clump, .node { transform-box: fill-box; transform-origin: center; }
+.yrlbl { font: 500 13px var(--font-mono); fill: var(--fg-2); letter-spacing: .04em; }
+.hs:hover .yrlbl, .hs:focus-visible .yrlbl, .hs.on .yrlbl { fill: var(--amber); }
+.drift { transform-box: fill-box; animation: drift 9s ease-in-out infinite; }
+@keyframes drift { 0%, 100% { translate: 0 0; rotate: 0deg; } 50% { translate: 6px -14px; rotate: 8deg; } }
+.tagpill rect { fill: color-mix(in srgb, var(--bg) 88%, transparent); }
+@media (prefers-reduced-motion: reduce) { #world, .drift { animation: none; } }
+
+/* glowing leaves, softer halos, the week's ledge */
+.leafnode .blade { filter: drop-shadow(0 0 5px rgba(244, 226, 120, .85)); animation: leafglow 3.4s ease-in-out infinite; }
+@keyframes leafglow { 0%, 100% { filter: drop-shadow(0 0 3px rgba(244, 226, 120, .55)); } 50% { filter: drop-shadow(0 0 9px rgba(250, 230, 120, 1)); } }
+.hs:hover .leafnode .blade, .hs:focus-visible .leafnode .blade, .hs.on .leafnode .blade { fill: #ffd54a; filter: drop-shadow(0 0 12px rgba(255, 213, 74, 1)); }
+.hs .glow { filter: blur(6px); }
+@keyframes breathe { 0%, 100% { opacity: 0; transform: scale(.7); } 50% { opacity: .22; transform: scale(1.1); } }
+.falling { filter: drop-shadow(0 0 4px rgba(244, 210, 90, .7)); }
+.bob2 { animation: bob 8s ease-in-out infinite; animation-delay: -3s; }
+@media (prefers-reduced-motion: reduce) { .leafnode .blade, .bob2 { animation: none; } }
+#scene.portrait #tags, #scene.portrait .side-label { display: none; }

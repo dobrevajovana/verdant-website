@@ -3,7 +3,17 @@
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const M = window.Motion;
   const NS = "http://www.w3.org/2000/svg";
-  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  // Safari ignores var() inside SVG presentation attributes, so theme colours go through style instead
+  const VARCOL = /var\(|color-mix\(/;
+  const el = (tag, attrs, parent) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) { const v = attrs[k]; if ((k === "fill" || k === "stroke") && VARCOL.test(v)) n.style.setProperty(k, v); else n.setAttribute(k, v); }
+    if (parent) parent.appendChild(n);
+    return n;
+  };
+  const cssify = root => root.querySelectorAll("[fill], [stroke], [stop-color]").forEach(n => ["fill", "stroke", "stop-color"].forEach(a => {
+    const v = n.getAttribute(a); if (v && VARCOL.test(v)) { n.style.setProperty(a, v); n.removeAttribute(a); }
+  }));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
@@ -60,7 +70,7 @@
   let subjKey = "beetle";
   const setNature = (n) => {
     const s = SRC[n.src];
-    nature.innerHTML = `<span class="kind" style="color:${s.color}">${esc(s.kind)}</span><h3>${esc(s.name)}</h3>${s.draw}<p>${esc(s.text)}</p>`;
+    nature.innerHTML = `<span class="kind" style="color:${s.color}">${esc(s.kind)}</span><h3>${esc(s.name)}</h3>${s.draw}<p>${esc(s.text)}</p>`; cssify(nature);
     if (M && !reduce) M.animate(nature.children, { opacity: [0, 1], y: [12, 0] }, { delay: M.stagger(0.05), type: "spring", stiffness: 220, damping: 22 });
   };
   const setTriple = (subj, n) => {
@@ -143,7 +153,7 @@
     resEl.innerHTML = ""; timeEl.textContent = "searching…";
     const show = () => {
       timeEl.textContent = `${qa.items.length} results · 0.${2 + qa.items.length % 3} s`;
-      resEl.innerHTML = qa.items.map(r => `<div class="res">${r.icon}<div><b>${esc(r.b)}</b><i>${esc(r.i)}</i><div class="src">${r.src}</div></div></div>`).join("");
+      resEl.innerHTML = qa.items.map(r => `<div class="res">${r.icon}<div><b>${esc(r.b)}</b><i>${esc(r.i)}</i><div class="src">${r.src}</div></div></div>`).join(""); cssify(resEl);
       if (M && !reduce) M.animate(resEl.children, { opacity: [0, 1], y: [16, 0], scale: [.97, 1] }, { delay: M.stagger(0.08), type: "spring", stiffness: 240, damping: 20 });
     };
     if (reduce) { qEl.textContent = qa.q; show(); return; }
@@ -204,7 +214,7 @@
     if (s.loop) h += `<div class="loop">${s.loop.map(([a, b]) => `<span>${esc(a)}<em>${esc(b)}</em></span>`).join("")}</div>`;
     if (s.take) h += `<div class="take-home"><b>You take home:</b> ${esc(s.take)}</div>`;
     if (s.cta) h += `<button class="btn btn-primary" type="button" data-sheet="join">Join this branch →</button>`;
-    body.innerHTML = h; body.scrollTop = 0;
+    body.innerHTML = h; body.scrollTop = 0; cssify(body);
     document.getElementById("story-count").textContent = `${idx + 1} / ${S[cur].slides.length}`;
     document.getElementById("story-prev").disabled = idx === 0;
     document.getElementById("story-next").textContent = idx === S[cur].slides.length - 1 ? "Done" : "Next";
@@ -256,5 +266,6 @@
   });
   setPaused(reduce);
 
+  cssify(document);
   window.VERDANT_PANELS = { openStory: open, closeStory: close, ask, drawGraph };
 })();
