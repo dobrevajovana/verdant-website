@@ -1,4 +1,4 @@
-/* VERDANT — tree, graph, ask-the-graph, rings and stories. Motion (motion.dev) for springs. */
+/* VERDANT panels — stories, the beetle's names, ask the owl, join. Motion (motion.dev) for springs. */
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const M = window.Motion;
@@ -7,79 +7,8 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  /* ================= TREE ================= */
-  const leafFills = ["var(--leaf-1)", "var(--leaf-2)", "var(--leaf-3)", "var(--leaf-4)"];
-  const kb = ["var(--ols)", "var(--wikidata)", "var(--dbpedia)", "var(--gbif)"];
-  const allLeaves = [], allEdges = [], allNodes = [];
-  document.querySelectorAll("#tree .crown").forEach(crown => {
-    const cx = +crown.dataset.cx, cy = +crown.dataset.cy, r = +crown.dataset.r;
-    [[0, 18, 1], [-.42, 34, .78], [.42, 34, .78], [0, -30, .82]].forEach(([dx, dy, s]) =>
-      el("ellipse", { cx: cx + dx * r, cy: cy + dy, rx: r * .78 * s, ry: r * .62 * s, fill: "var(--leaf-4)", opacity: .55 }, crown));
-    for (let i = 0; i < 46; i++) {
-      const a = rnd() * 6.283, d = Math.sqrt(rnd());
-      const x = cx + Math.cos(a) * d * r * 1.05, y = cy + Math.sin(a) * d * r * .78 + 10;
-      const lf = el("g", { class: "leaf" }, crown);
-      el("ellipse", { cx: x, cy: y, rx: 12 + rnd() * 11, ry: 6 + rnd() * 5, fill: leafFills[Math.floor(rnd() * 4)], opacity: .92, transform: `rotate(${Math.round(rnd() * 180)} ${x.toFixed(1)} ${y.toFixed(1)})` }, lf);
-      allLeaves.push(lf);
-    }
-    const pts = [[cx, cy + 4]];
-    for (let i = 0; i < 6; i++) { const a = (i / 6) * 6.283 + rnd() * .6; const d = r * (.45 + rnd() * .35); pts.push([cx + Math.cos(a) * d, cy + Math.sin(a) * d * .72 + 6]); }
-    const g = el("g", {}, crown);
-    pts.slice(1).forEach((p, i) => {
-      allEdges.push(el("line", { x1: pts[0][0], y1: pts[0][1], x2: p[0], y2: p[1], stroke: "var(--fg)", "stroke-opacity": .55, "stroke-width": 1.4 }, g));
-      const q = pts[1 + ((i + 1) % 6)];
-      if (i % 2 === 0) allEdges.push(el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], stroke: "var(--fg)", "stroke-opacity": .28, "stroke-width": 1 }, g));
-    });
-    pts.forEach((p, i) => allNodes.push(el("circle", { cx: p[0], cy: p[1], r: i === 0 ? 8 : 5, fill: i === 0 ? "var(--amber)" : kb[i % 4], stroke: "var(--bg)", "stroke-width": 2, class: "leaf" }, g)));
-    if (!reduce) el("circle", { cx: pts[0][0], cy: pts[0][1], r: 12, class: "ring" }, g);
-  });
-  const rootNodes = document.getElementById("root-nodes");
-  [[340, 618], [290, 640], [470, 628], [510, 645], [396, 650], [312, 596], [498, 600]].forEach(([x, y], i) =>
-    allNodes.push(el("circle", { cx: x, cy: y, r: i < 2 ? 5 : 4, fill: i % 2 ? "var(--ols)" : "var(--amber)", class: "leaf" }, rootNodes)));
-  const grass = document.getElementById("grass");
-  for (let i = 0; i < 70; i++) {
-    const x = rnd() * 800, base = 590 + Math.sin(x / 120) * 8 + rnd() * 50, h = 6 + rnd() * 10;
-    el("path", { d: `M${x.toFixed(1)} ${base.toFixed(1)} q ${(rnd() * 4 - 2).toFixed(1)} ${(-h).toFixed(1)} ${(rnd() * 6 - 3).toFixed(1)} ${(-h * 1.3).toFixed(1)}`, stroke: "var(--leaf-2)", "stroke-width": 1.6, fill: "none", opacity: .7, "stroke-linecap": "round" }, grass);
-  }
-  const drawIn = (paths, baseDelay, dur) => paths.forEach((p, i) => {
-    const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
-    p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, delay: baseDelay + i * 120, easing: "cubic-bezier(.3,.7,.2,1)", fill: "forwards" });
-  });
-  if (!reduce) {
-    drawIn([...document.querySelectorAll("#roots-lines .grow")], 0, 800);
-    drawIn([document.getElementById("trunk")], 250, 900);
-    drawIn([...document.querySelectorAll(".branch-g > .grow")], 900, 800);
-    if (M) {
-      // start hidden only when Motion is here to grow them back
-      allLeaves.forEach(l => l.style.opacity = 0); allNodes.forEach(n => n.style.transform = "scale(0)");
-      allEdges.forEach(e => e.style.opacity = 0); document.querySelectorAll("#tree .tag").forEach(t => t.style.opacity = 0);
-      M.animate(allLeaves, { scale: [0, 1], opacity: [0, 1] }, { delay: M.stagger(0.012, { startDelay: 1.3 }), type: "spring", stiffness: 260, damping: 16 });
-      M.animate(allNodes, { scale: [0, 1] }, { delay: M.stagger(0.03, { startDelay: 1.9 }), type: "spring", stiffness: 300, damping: 14 });
-      M.animate(allEdges, { opacity: [0, 1] }, { delay: M.stagger(0.02, { startDelay: 2.0 }), duration: .5 });
-      M.animate("#tree .tag", { opacity: [0, 1] }, { delay: M.stagger(0.15, { startDelay: 2.4 }), duration: .5 });
-    }
-  }
-  const routes = ["sap-data", "sap-learn", "sap-connect"].map(id => { const p = document.getElementById(id); return { p, L: p.getTotalLength() }; });
-  const pulseLayer = document.getElementById("pulses"), live = [];
-  let running = !reduce;
-  const tick = now => {
-    if (!running) return;
-    if (live.length < 6 && Math.random() < .035) live.push({ c: el("circle", { r: 3.6, fill: "var(--amber)" }, pulseLayer), route: routes[Math.floor(Math.random() * 3)], s: now });
-    for (let i = live.length - 1; i >= 0; i--) {
-      const q = live[i], k = (now - q.s) / 2600;
-      if (k >= 1) { q.c.remove(); live.splice(i, 1); continue; }
-      const pt = q.route.p.getPointAtLength(q.route.L * k);
-      q.c.setAttribute("cx", pt.x); q.c.setAttribute("cy", pt.y); q.c.setAttribute("opacity", Math.min(1, (1 - k) * 2));
-    }
-    requestAnimationFrame(tick);
-  };
-  if (!reduce) setTimeout(() => requestAnimationFrame(tick), 2600);
-  const tree = document.getElementById("tree");
-  const wake = () => { const was = running; running = treeVisible && !document.hidden && !reduce; if (running && !was) requestAnimationFrame(tick); };
-  let treeVisible = true;
-  new IntersectionObserver(([en]) => { treeVisible = en.isIntersecting; wake(); }).observe(tree);
-  document.addEventListener("visibilitychange", wake);
-
+  /* drawings of the four trees (trunk story) */
+  const TREE_SVG = ["<svg viewBox=\"0 0 220 170\" role=\"img\" aria-label=\"Porphyry's tree: substance, body, living, animal, human, each split in two\"><g stroke=\"var(--fg-2)\" stroke-width=\"1.4\" fill=\"none\"><path d=\"M110 14 V156\"/><path d=\"M110 36 H62 M110 36 H158 M110 70 H62 M110 70 H158 M110 104 H62 M110 104 H158 M110 138 H62 M110 138 H158\" stroke-dasharray=\"3 3\"/></g><g font-size=\"10\" fill=\"var(--fg)\" text-anchor=\"middle\"><rect x=\"74\" y=\"26\" width=\"72\" height=\"20\" rx=\"10\" fill=\"var(--bg)\" stroke=\"var(--fg-2)\"/><text x=\"110\" y=\"40\">Substance</text><rect x=\"74\" y=\"60\" width=\"72\" height=\"20\" rx=\"10\" fill=\"var(--bg)\" stroke=\"var(--fg-2)\"/><text x=\"110\" y=\"74\">Body</text><rect x=\"74\" y=\"94\" width=\"72\" height=\"20\" rx=\"10\" fill=\"var(--bg)\" stroke=\"var(--fg-2)\"/><text x=\"110\" y=\"108\">Animal</text><rect x=\"74\" y=\"128\" width=\"72\" height=\"20\" rx=\"10\" fill=\"var(--bg)\" stroke=\"var(--amber)\"/><text x=\"110\" y=\"142\" fill=\"var(--amber)\">Human</text><text x=\"36\" y=\"40\" fill=\"var(--fg-2)\">corporeal</text><text x=\"186\" y=\"40\" fill=\"var(--fg-2)\">incorporeal</text><text x=\"36\" y=\"74\" fill=\"var(--fg-2)\">animate</text><text x=\"186\" y=\"74\" fill=\"var(--fg-2)\">inanimate</text><text x=\"36\" y=\"108\" fill=\"var(--fg-2)\">sensitive</text><text x=\"186\" y=\"108\" fill=\"var(--fg-2)\">insensitive</text><text x=\"36\" y=\"142\" fill=\"var(--fg-2)\">rational</text><text x=\"186\" y=\"142\" fill=\"var(--fg-2)\">irrational</text></g></svg>", "<svg viewBox=\"0 0 220 170\" role=\"img\" aria-label=\"Linnaeus: the two-part name Lucanus cervus, genus and species\"><text x=\"110\" y=\"92\" text-anchor=\"middle\" font-family=\"Instrument Serif, Georgia, serif\" font-style=\"italic\" font-size=\"32\" fill=\"var(--fg)\">Lucanus cervus</text><g stroke=\"var(--fg-2)\" stroke-width=\"1.2\" fill=\"none\"><path d=\"M14 104 v8 h96 v-8\"/><path d=\"M120 104 v8 h86 v-8\"/></g><g font-size=\"11\" fill=\"var(--fg-2)\" text-anchor=\"middle\"><text x=\"62\" y=\"130\">genus</text><text x=\"163\" y=\"130\">species</text></g><text x=\"110\" y=\"40\" text-anchor=\"middle\" font-size=\"11\" fill=\"var(--amber)\" letter-spacing=\"1.5\">L. 1758</text></svg>", "<svg viewBox=\"0 0 220 170\" role=\"img\" aria-label=\"Darwin's 1837 'I think' sketch: one ancestor branching into species A, B, C and D\"><text x=\"22\" y=\"30\" font-family=\"Instrument Serif, Georgia, serif\" font-style=\"italic\" font-size=\"24\" fill=\"var(--fg)\">I think</text><g stroke=\"var(--fg)\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"><path class=\"draw\" d=\"M70 150 C 74 130, 66 118, 80 104 C 96 90, 104 80, 110 64\"/><path class=\"draw\" d=\"M80 104 C 70 92, 58 84, 50 70\"/><path class=\"draw\" d=\"M110 64 C 118 56, 134 50, 150 46\"/><path class=\"draw\" d=\"M110 64 C 112 52, 108 44, 116 34\"/><path class=\"draw\" d=\"M96 90 C 120 92, 150 86, 176 78\"/><path class=\"draw\" d=\"M150 46 C 162 50, 176 42, 190 44\"/></g><circle cx=\"70\" cy=\"152\" r=\"6\" fill=\"none\" stroke=\"var(--fg)\"/><text x=\"66\" y=\"156\" font-size=\"9\" fill=\"var(--fg)\">1</text><g font-family=\"Instrument Serif, Georgia, serif\" font-size=\"15\" fill=\"var(--amber)\"><text x=\"40\" y=\"66\">A</text><text x=\"114\" y=\"30\">B</text><text x=\"180\" y=\"76\">C</text><text x=\"194\" y=\"44\">D</text></g></svg>", "<svg viewBox=\"0 0 220 170\" role=\"img\" aria-label=\"VERDANT: one name linked to many databases\"><g stroke=\"var(--fg-2)\" stroke-width=\"1.2\"><line x1=\"110\" y1=\"86\" x2=\"40\" y2=\"40\"/><line x1=\"110\" y1=\"86\" x2=\"182\" y2=\"38\"/><line x1=\"110\" y1=\"86\" x2=\"196\" y2=\"112\"/><line x1=\"110\" y1=\"86\" x2=\"30\" y2=\"128\"/><line x1=\"110\" y1=\"86\" x2=\"110\" y2=\"154\"/></g><circle cx=\"40\" cy=\"40\" r=\"9\" fill=\"var(--ols)\"/><circle cx=\"182\" cy=\"38\" r=\"9\" fill=\"var(--wikidata)\"/><circle cx=\"196\" cy=\"112\" r=\"9\" fill=\"var(--dbpedia)\"/><circle cx=\"30\" cy=\"128\" r=\"9\" fill=\"var(--gbif)\"/><circle cx=\"110\" cy=\"154\" r=\"9\" fill=\"var(--ols)\"/><circle cx=\"110\" cy=\"86\" r=\"16\" fill=\"var(--amber)\"/><text x=\"110\" y=\"90\" text-anchor=\"middle\" font-size=\"10\" font-weight=\"600\" fill=\"var(--on-amber)\">beech</text></svg>"];
   /* ================= ONE BEETLE, MANY NAMES ================= */
   // Each neighbour = one triple. VERDANT URIs follow the pipeline (n2k:species_…, n2k:habitat_…).
   // Public identifiers checked against OLS4, Wikidata and DBpedia (Oct 2026):
@@ -179,7 +108,6 @@
     document.querySelectorAll("[data-subject]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     subjKey = b.dataset.subject; drawGraph();
   }));
-  drawGraph();
 
   /* ================= ASK THE GRAPH ================= */
   // Illustrative answers for the interface sketch. Species codes are Natura 2000 species codes.
@@ -228,29 +156,14 @@
   }));
   qEl.textContent = QA.forest.q;
   resEl.innerHTML = QA.forest.items.map(r => `<div class="res">${r.icon}<div><b>${esc(r.b)}</b><i>${esc(r.i)}</i><div class="src">${r.src}</div></div></div>`).join("");
-
-  /* ================= MEANING IS DISTANCE ================= */
-  const rings = document.getElementById("rings");
-  const RC = 260;
-  [[230, .1, .3], [175, .2, .45], [120, .35, .75]].forEach(([r, fo, so]) =>
-    el("circle", { cx: RC, cy: RC, r, fill: `color-mix(in srgb, var(--ols) ${fo * 100}%, transparent)`, stroke: "var(--ols)", "stroke-opacity": so, "stroke-width": 1.5 }, rings));
-  [["related", 230], ["close", 175], ["same", 120]].forEach(([t, r]) => { const x = el("text", { x: RC, y: RC - r + 18, "text-anchor": "middle", "font-size": 11, fill: "var(--fg-2)", "font-family": "IBM Plex Mono, monospace", "letter-spacing": 1 }, rings); x.textContent = t.toUpperCase(); });
-  // illustrative placements around "Active raised bogs"
-  const cands = [["raised bog", 70, -40], ["bog", 100, 200], ["peatland", 150, 120], ["mire", 160, 300], ["fen", 205, 40], ["wetland", 215, 220], ["lake", 245, 205]];
-  const candG = el("g", {}, rings);
-  cands.forEach(([w, d, ang]) => {
-    const a = ang * Math.PI / 180, x = RC + Math.cos(a) * d, y = RC + Math.sin(a) * d, out = d > 230;
-    const g = el("g", { class: "cand" }, candG);
-    el("line", { x1: RC, y1: RC, x2: x, y2: y, stroke: "var(--fg-2)", "stroke-opacity": out ? .2 : .5, "stroke-dasharray": "3 4" }, g);
-    el("circle", { cx: x, cy: y, r: 7, fill: out ? "var(--bg)" : "var(--ols)", stroke: out ? "var(--fg-2)" : "var(--ols)", "stroke-width": 2 }, g);
-    const t = el("text", { x: x + 12, y: y + 4, "font-size": 15, fill: out ? "var(--fg-2)" : "var(--fg)", "font-family": "Instrument Serif, Georgia, serif" }, g); t.textContent = w;
-  });
-  el("circle", { cx: RC, cy: RC, r: 40, fill: "var(--amber)" }, rings);
-  const ct = el("text", { x: RC, y: RC - 2, "text-anchor": "middle", "font-size": 12, "font-weight": 700, fill: "var(--on-amber)" }, rings); ct.textContent = "Active";
-  const ct2 = el("text", { x: RC, y: RC + 13, "text-anchor": "middle", "font-size": 12, "font-weight": 700, fill: "var(--on-amber)" }, rings); ct2.textContent = "raised bogs";
-
   /* ================= STORIES ================= */
   const S = {
+    history: { title: "Four trees", sub: "Why a tree", slides: [
+      { k: "c. 270 CE · Porphyry", h: "Divide.", draw: 0, p: "What is a thing? Split being into kinds, two at a time. Ontology, from the Greek: the study of what is." },
+      { k: "1758 · Linnaeus", h: "Name.", draw: 1, p: "Two words for every living thing. The stag beetle got its name this year." },
+      { k: "1837 · Darwin", h: "Relate.", draw: 2, p: "“I think.” Every kind shares an ancestor. The tree became a tree of life." },
+      { k: "2026 · VERDANT", h: "Link.", draw: 3, p: "One name, understood by every database at once. What we cannot name, we cannot protect.", cta: true }
+    ]},
     roots: { title: "Roots", sub: "What already works", slides: [
       { k: "The roots", h: "Already in the ground.", big: "1,955", p: "Every protected habitat, species, region and status from the Habitats and Birds Directives, described in one structured vocabulary." },
       { k: "Linked", h: "Over 14,500 introductions.", chips: ["NCBI Taxonomy", "ENVO", "Wikidata", "DBpedia"], p: "Each term is connected to how the world's biological databases already name it." },
@@ -284,12 +197,13 @@
     const s = S[cur].slides[idx];
     let h = `<span class="k">${esc(s.k)}</span><h3>${esc(s.h)}</h3>`;
     if (s.big) h += `<div class="big">${esc(s.big)}</div>`;
+    if (s.draw != null) h += `<div class="draw-box">${TREE_SVG[s.draw]}</div>`;
     if (s.triple) h += `<div class="triple"><span><b>${esc(s.triple[0])}</b></span><span>${esc(s.triple[1])}</span><span style="color:var(--ols)">${esc(s.triple[2])} .</span></div>`;
     if (s.p) h += `<p>${esc(s.p)}</p>`;
     if (s.chips) h += `<div class="chips">${s.chips.map(c => `<span>${esc(c)}</span>`).join("")}</div>`;
     if (s.loop) h += `<div class="loop">${s.loop.map(([a, b]) => `<span>${esc(a)}<em>${esc(b)}</em></span>`).join("")}</div>`;
     if (s.take) h += `<div class="take-home"><b>You take home:</b> ${esc(s.take)}</div>`;
-    if (s.cta) h += `<a class="btn btn-primary" href="#join" data-close>Join this branch →</a>`;
+    if (s.cta) h += `<button class="btn btn-primary" type="button" data-sheet="join">Join this branch →</button>`;
     body.innerHTML = h; body.scrollTop = 0;
     document.getElementById("story-count").textContent = `${idx + 1} / ${S[cur].slides.length}`;
     document.getElementById("story-prev").disabled = idx === 0;
@@ -309,29 +223,25 @@
     pauseBtn.setAttribute("aria-label", v ? "Play" : "Pause auto-play");
     pauseBtn.innerHTML = v ? '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg>' : '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
   };
-  const open = (key, from) => {
-    cur = key; idx = 0; opener = from || document.activeElement;
+  const open = (key, from, at) => {
+    cur = key; idx = Math.min(at || 0, S[key].slides.length - 1); opener = from || document.activeElement;
     document.getElementById("story-title").textContent = S[key].title;
     document.getElementById("story-sub").textContent = S[key].sub;
     bars.innerHTML = S[key].slides.map(() => "<span><i></i></span>").join("");
-    story.hidden = false; document.body.classList.add("locked");
+    story.hidden = false;
     setPaused(reduce); render();
     if (M && !reduce) M.animate(card, { opacity: [0, 1], scale: [.92, 1], y: [24, 0] }, { type: "spring", stiffness: 260, damping: 24 });
     document.getElementById("story-close").focus();
     last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(loop);
   };
-  const close = () => { story.hidden = true; document.body.classList.remove("locked"); cancelAnimationFrame(raf); if (opener && opener.focus) opener.focus(); };
-  document.querySelectorAll("[data-open]").forEach(n => {
-    n.addEventListener("click", () => open(n.dataset.open, n));
-    if (n.getAttribute("role") === "button") n.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(n.dataset.open, n); } });
-  });
+  const close = () => { if (story.hidden) return; story.hidden = true; cancelAnimationFrame(raf); if (opener && opener.focus) opener.focus(); };
   document.getElementById("story-close").addEventListener("click", close);
   document.getElementById("story-prev").addEventListener("click", () => go(-1));
   document.getElementById("story-next").addEventListener("click", () => go(1));
   document.querySelector(".tapzone.prev").addEventListener("click", () => go(-1));
   document.querySelector(".tapzone.next").addEventListener("click", () => go(1));
   pauseBtn.addEventListener("click", () => setPaused(!paused));
-  story.addEventListener("click", e => { if (e.target === story) close(); if (e.target.closest("[data-close]")) close(); });
+  story.addEventListener("click", e => { if (e.target === story) close(); const j = e.target.closest("[data-sheet]"); if (j) { close(); window.VERDANT_SHEETS && window.VERDANT_SHEETS.open(j.dataset.sheet); } });
   document.addEventListener("keydown", e => {
     if (story.hidden) return;
     if (e.key === "Escape") close();
@@ -346,8 +256,5 @@
   });
   setPaused(reduce);
 
-  /* ================= HAND-OFF ================= */
-  // Scroll-driven motion lives in scroll.js (GSAP ScrollTrigger); it calls back into these.
-  window.VERDANT = { ask, candidates: candG, reduce };
-  document.dispatchEvent(new CustomEvent("verdant:ready"));
+  window.VERDANT_PANELS = { openStory: open, closeStory: close, ask, drawGraph };
 })();
