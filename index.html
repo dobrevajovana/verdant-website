@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VERDANT</title>
+<meta name="description" content="What we cannot name, we cannot protect. VERDANT links Europe's protected habitats and species to the world's biological databases. BioHackathon Europe 2026, Project 11.">
+<meta name="theme-color" content="#0c1712" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f1f5ec" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VERDANT · BioHackathon Europe 2026">
+<meta property="og:description" content="What we cannot name, we cannot protect. Help grow a tree of links for Europe's protected nature, Barcelona, 9–13 November 2026.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 30V16' stroke='%236b5340' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='9' cy='11' r='6' fill='%233f9a5a'/%3E%3Ccircle cx='23' cy='11' r='6' fill='%232f7d4a'/%3E%3Ccircle cx='16' cy='7' r='6' fill='%235bb36f'/%3E%3Ccircle cx='16' cy='7' r='2.2' fill='%23e9b44c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="VERDANT home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30V16" stroke="var(--bark)" stroke-width="3" stroke-linecap="round"/><circle cx="9" cy="11" r="6" fill="var(--leaf-2)"/><circle cx="23" cy="11" r="6" fill="var(--leaf-1)"/><circle cx="16" cy="7" r="6" fill="var(--leaf-3)"/><path d="M9 11 16 7 23 11" stroke="var(--fg)" stroke-width="1.2" fill="none"/><circle cx="16" cy="7" r="2.2" fill="var(--amber)"/><circle cx="9" cy="11" r="1.6" fill="var(--wikidata)"/><circle cx="23" cy="11" r="1.6" fill="var(--dbpedia)"/></svg>
+      VERDANT
+    </a>
+    <ul>
+      <li><a href="#trees">Four trees</a></li>
+      <li><a href="#names">One beetle</a></li>
+      <li><a href="#ask">Ask</a></li>
+      <li><a href="#branches">Branches</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#join">Join us</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas id="pollen" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">BioHackathon Europe 2026 · Project 11 · Barcelona, 9–13 Nov</span>
+        <h1 id="hero-title">What we cannot name, <em>we cannot protect.</em></h1>
+        <p class="lede">Europe protects 1,955 forms of life by law. To the world's databases, they are still strangers. VERDANT introduces them.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#join">Grow it with us
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="#ask">See what it answers</a>
+        </div>
+        <p class="hint"><i aria-hidden="true"></i>Tap a branch or the roots</p>
+      </div>
+      <div class="tree-wrap">
+        <svg id="tree" viewBox="0 0 800 660" role="group" aria-label="The VERDANT tree. Roots: what already works. Three branches: grow the data, teach it to learn, connect the forest. Each opens a story.">
+          <defs><linearGradient id="trunkG" x1="0" x2="1"><stop offset="0" stop-color="var(--bark)"/><stop offset="1" stop-color="var(--root)"/></linearGradient></defs>
+          <path id="hill-back" d="M0 520 C 140 470, 260 500, 380 488 S 640 450, 800 492 V700 H0Z" fill="var(--hill-3)"/>
+          <path id="hill-mid" d="M0 560 C 160 520, 300 548, 420 540 S 660 520, 800 548 V700 H0Z" fill="var(--hill-2)"/>
+          <path d="M0 598 C 180 572, 320 586, 400 584 S 640 570, 800 590 V660 H0Z" fill="var(--hill-1)"/>
+          <g id="grass" aria-hidden="true"></g>
+          <g class="branch-g" id="b-roots" data-open="roots" tabindex="0" role="button" aria-label="Roots: what already works. Open story.">
+            <rect class="hit" x="250" y="580" width="300" height="80"/>
+            <g id="roots-lines" fill="none" stroke="var(--root)" stroke-width="3" stroke-linecap="round">
+              <path class="grow" d="M400 590 C 380 610, 340 618, 290 640"/><path class="grow" d="M400 590 C 410 615, 450 625, 510 645"/>
+              <path class="grow" d="M400 590 C 398 612, 392 630, 396 655"/><path class="grow" d="M372 606 C 352 600, 330 604, 312 596"/>
+              <path class="grow" d="M440 616 C 462 608, 480 610, 498 600"/>
+            </g>
+            <g id="root-nodes"></g>
+            <g class="tag" transform="translate(522 612)"><rect x="0" y="-22" width="170" height="44" rx="22"/><text x="18" y="-3" class="sub">ROOTS</text><text x="18" y="14">What already works</text></g>
+          </g>
+          <path class="grow" id="trunk" d="M400 592 C 396 520, 404 460, 400 392" fill="none" stroke="url(#trunkG)" stroke-width="26" stroke-linecap="round"/>
+          <g class="branch-g" id="b-data" data-open="data" tabindex="0" role="button" aria-label="Branch: grow the data. Open story.">
+            <path class="grow" d="M398 452 C 350 420, 290 380, 210 300" fill="none" stroke="var(--bark)" stroke-width="13" stroke-linecap="round"/>
+            <g class="crown sway-a" data-cx="190" data-cy="250" data-r="98"></g>
+            <circle class="hit" cx="190" cy="250" r="125"/>
+            <g class="tag" transform="translate(40 382)"><rect x="0" y="-22" width="160" height="44" rx="22"/><text x="18" y="-3" class="sub">BRANCH · DATA</text><text x="18" y="14">Grow the data</text></g>
+          </g>
+          <g class="branch-g" id="b-learn" data-open="learn" tabindex="0" role="button" aria-label="Branch: teach it to learn. Open story.">
+            <path class="grow" d="M400 400 C 404 330, 396 260, 400 190" fill="none" stroke="var(--bark)" stroke-width="15" stroke-linecap="round"/>
+            <g class="crown sway-b" data-cx="400" data-cy="150" data-r="112"></g>
+            <circle class="hit" cx="400" cy="150" r="135"/>
+            <g class="tag" transform="translate(320 18)"><rect x="0" y="-22" width="160" height="44" rx="22"/><text x="18" y="-3" class="sub">BRANCH · EXPERTS</text><text x="18" y="14">Teach it to learn</text></g>
+          </g>
+          <g class="branch-g" id="b-connect" data-open="connect" tabindex="0" role="button" aria-label="Branch: connect the forest. Open story.">
+            <path class="grow" d="M402 470 C 460 430, 530 380, 600 300" fill="none" stroke="var(--bark)" stroke-width="13" stroke-linecap="round"/>
+            <g class="crown sway-c" data-cx="615" data-cy="250" data-r="100"></g>
+            <circle class="hit" cx="615" cy="250" r="125"/>
+            <g class="tag" transform="translate(600 382)"><rect x="0" y="-22" width="178" height="44" rx="22"/><text x="18" y="-3" class="sub">BRANCH · COMMUNITY</text><text x="18" y="14">Connect the forest</text></g>
+          </g>
+          <g fill="none" stroke="none" aria-hidden="true">
+            <path id="sap-data" d="M400 592 C 396 520, 404 470, 398 452 C 350 420, 290 380, 190 250"/>
+            <path id="sap-learn" d="M400 592 C 396 520, 404 460, 400 400 C 404 330, 396 260, 400 150"/>
+            <path id="sap-connect" d="M400 592 C 396 520, 404 480, 402 470 C 460 430, 530 380, 615 250"/>
+          </g>
+          <g id="pulses" aria-hidden="true"></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof" aria-label="What already works">
+    <div class="wrap facts">
+      <div class="fact"><b data-count="1955">1,955</b><span>protected habitats and species, described</span></div>
+      <div class="fact"><b data-count="14500" data-suffix="+">14,500+</b><span>links to the world's biological databases</span></div>
+      <div class="fact"><b data-count="9">9</b><span>biogeographical regions, from Alpine to Steppic</span></div>
+      <div class="fact"><b>Open</b><span>free to use, MIT licence</span></div>
+    </div>
+  </section>
+
+  <!-- ============ FOUR TREES ============ -->
+  <section class="block" id="trees" aria-labelledby="trees-title">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Why a tree</span>
+        <div class="etym" aria-label="Ontology: from Greek onto, being, and logos, study. The study of what is.">
+          <span>ὄντο<small>being</small></span><span class="plus">+</span><span>λογία<small>study of</small></span><span class="eq">=</span><span class="res">the study of what is</span>
+        </div>
+        <h2 id="trees-title" class="sr">Four trees of knowledge</h2>
+        <p class="lede">For two thousand years, we have drawn what we know about life as a tree.</p>
+      </div>
+      <div class="rail" aria-hidden="true"><span class="rail-fill"></span><b>c. 270</b><b>1758</b><b>1837</b><b>2026</b></div>
+      <div class="trees">
+        <article class="tcard reveal">
+          <svg viewBox="0 0 220 170" role="img" aria-label="Porphyry's tree: substance, body, living, animal, human, each split in two">
+            <g stroke="var(--fg-2)" stroke-width="1.4" fill="none">
+              <path d="M110 14 V156"/>
+              <path d="M110 36 H62 M110 36 H158 M110 70 H62 M110 70 H158 M110 104 H62 M110 104 H158 M110 138 H62 M110 138 H158" stroke-dasharray="3 3"/>
+            </g>
+            <g font-size="10" fill="var(--fg)" text-anchor="middle">
+              <rect x="74" y="26" width="72" height="20" rx="10" fill="var(--bg)" stroke="var(--fg-2)"/><text x="110" y="40">Substance</text>
+              <rect x="74" y="60" width="72" height="20" rx="10" fill="var(--bg)" stroke="var(--fg-2)"/><text x="110" y="74">Body</text>
+              <rect x="74" y="94" width="72" height="20" rx="10" fill="var(--bg)" stroke="var(--fg-2)"/><text x="110" y="108">Animal</text>
+              <rect x="74" y="128" width="72" height="20" rx="10" fill="var(--bg)" stroke="var(--amber)"/><text x="110" y="142" fill="var(--amber)">Human</text>
+              <text x="36" y="40" fill="var(--fg-2)">corporeal</text><text x="186" y="40" fill="var(--fg-2)">incorporeal</text>
+              <text x="36" y="74" fill="var(--fg-2)">animate</text><text x="186" y="74" fill="var(--fg-2)">inanimate</text>
+              <text x="36" y="108" fill="var(--fg-2)">sensitive</text><text x="186" y="108" fill="var(--fg-2)">insensitive</text>
+              <text x="36" y="142" fill="var(--fg-2)">rational</text><text x="186" y="142" fill="var(--fg-2)">irrational</text>
+            </g>
+          </svg>
+          <span class="yr">c. 270 CE · PORPHYRY</span>
+          <h3>Divide.</h3>
+          <p>What is a thing? Split being into kinds, two at a time.</p>
+        </article>
+        <article class="tcard reveal">
+          <svg viewBox="0 0 220 170" role="img" aria-label="Linnaeus: the two-part name Lucanus cervus, genus and species">
+            <text x="110" y="92" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="32" fill="var(--fg)">Lucanus cervus</text>
+            <g stroke="var(--fg-2)" stroke-width="1.2" fill="none"><path d="M14 104 v8 h96 v-8"/><path d="M120 104 v8 h86 v-8"/></g>
+            <g font-size="11" fill="var(--fg-2)" text-anchor="middle"><text x="62" y="130">genus</text><text x="163" y="130">species</text></g>
+            <text x="110" y="40" text-anchor="middle" font-size="11" fill="var(--amber)" letter-spacing="1.5">L. 1758</text>
+          </svg>
+          <span class="yr">1758 · LINNAEUS</span>
+          <h3>Name.</h3>
+          <p>Two words for every living thing. The stag beetle got its name this year.</p>
+        </article>
+        <article class="tcard reveal">
+          <svg viewBox="0 0 220 170" role="img" aria-label="Darwin's 1837 'I think' sketch: one ancestor branching into species A, B, C and D">
+            <text x="22" y="30" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="24" fill="var(--fg)">I think</text>
+            <g stroke="var(--fg)" stroke-width="1.4" fill="none" stroke-linecap="round">
+              <path class="draw" d="M70 150 C 74 130, 66 118, 80 104 C 96 90, 104 80, 110 64"/>
+              <path class="draw" d="M80 104 C 70 92, 58 84, 50 70"/>
+              <path class="draw" d="M110 64 C 118 56, 134 50, 150 46"/>
+              <path class="draw" d="M110 64 C 112 52, 108 44, 116 34"/>
+              <path class="draw" d="M96 90 C 120 92, 150 86, 176 78"/>
+              <path class="draw" d="M150 46 C 162 50, 176 42, 190 44"/>
+            </g>
+            <circle cx="70" cy="152" r="6" fill="none" stroke="var(--fg)"/><text x="66" y="156" font-size="9" fill="var(--fg)">1</text>
+            <g font-family="Instrument Serif, Georgia, serif" font-size="15" fill="var(--amber)"><text x="40" y="66">A</text><text x="114" y="30">B</text><text x="180" y="76">C</text><text x="194" y="44">D</text></g>
+          </svg>
+          <span class="yr">1837 · DARWIN</span>
+          <h3>Relate.</h3>
+          <p>Every kind shares an ancestor. The tree became a tree of life.</p>
+        </article>
+        <article class="tcard now reveal">
+          <svg viewBox="0 0 220 170" role="img" aria-label="VERDANT: one name linked to many databases">
+            <g stroke="var(--fg-2)" stroke-width="1.2">
+              <line x1="110" y1="86" x2="40" y2="40"/><line x1="110" y1="86" x2="182" y2="38"/><line x1="110" y1="86" x2="196" y2="112"/><line x1="110" y1="86" x2="30" y2="128"/><line x1="110" y1="86" x2="110" y2="154"/>
+            </g>
+            <circle cx="40" cy="40" r="9" fill="var(--ols)"/><circle cx="182" cy="38" r="9" fill="var(--wikidata)"/><circle cx="196" cy="112" r="9" fill="var(--dbpedia)"/><circle cx="30" cy="128" r="9" fill="var(--gbif)"/><circle cx="110" cy="154" r="9" fill="var(--ols)"/>
+            <circle cx="110" cy="86" r="16" fill="var(--amber)"/>
+            <text x="110" y="90" text-anchor="middle" font-size="10" font-weight="600" fill="var(--on-amber)">beech</text>
+          </svg>
+          <span class="yr">2026 · VERDANT</span>
+          <h3>Link.</h3>
+          <p>One name, understood by every database at once.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ONE BEETLE, MANY NAMES ============ -->
+  <section class="block" id="names" aria-labelledby="names-title">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">What a link looks like</span>
+        <h2 id="names-title">One beetle. Many names.</h2>
+        <p class="lede">The stag beetle lives in old oak and beech woods, and every database knows it by a different name. VERDANT writes down that they mean the same animal, as a three-word sentence. Tap a name.</p>
+      </div>
+      <div class="names">
+        <div>
+          <div class="seg" role="group" aria-label="Choose a subject">
+            <button type="button" data-subject="beetle" aria-pressed="true">A species</button>
+            <button type="button" data-subject="beech" aria-pressed="false">A habitat</button>
+          </div>
+          <div class="graph-box"><svg id="wolf" viewBox="0 0 720 460" role="group" aria-label="Graph of one Natura 2000 term and the names other databases give it"></svg></div>
+          <div class="sentence" aria-live="polite">
+            <div class="row">
+              <div class="w s"><small>subject</small><code id="t-s">n2k:species_lucanus_cervus</code></div>
+              <div class="w p"><small>verb</small><code id="t-p">skos:exactMatch</code></div>
+              <div class="w o"><small>object</small><code id="t-o">obo:NCBITaxon_41109</code></div>
+            </div>
+            <p class="plain" id="t-plain">“Our stag beetle is exactly NCBI's taxon 41109.”</p>
+          </div>
+        </div>
+        <aside class="nature" id="nature" aria-live="polite"></aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ASK THE GRAPH ============ -->
+  <section class="block" id="ask" aria-labelledby="ask-title">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">What you get</span>
+        <h2 id="ask-title">Ask in plain words. Answers in seconds.</h2>
+        <p class="lede">No code. Pick a question and see what the graph finds across every database it links.</p>
+      </div>
+      <div class="ask reveal">
+        <div class="ask-bar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span class="q" id="ask-q">What lives in an old beech forest?</span>
+          <span class="time" id="ask-time">4 results · 0.3 s</span>
+        </div>
+        <div class="ask-qs" role="group" aria-label="Example questions">
+          <button type="button" data-q="forest" aria-pressed="true">What lives in an old beech forest?</button>
+          <button type="button" data-q="estuary" aria-pressed="false">Which protected species live in estuaries?</button>
+          <button type="button" data-q="bog" aria-pressed="false">What do other databases call a raised bog?</button>
+        </div>
+        <div class="results" id="results" aria-live="polite"></div>
+        <p class="ask-foot note">A sketch of the interface we'll build this week. Answers are examples, not live results yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MEANING IS DISTANCE ============ -->
+  <section class="block" id="distance" aria-labelledby="dist-title">
+    <div class="wrap dist">
+      <svg id="rings" viewBox="0 0 520 520" role="img" aria-label="Rings of similarity around 'Active raised bogs': close names sit near the centre, distant ones further out"></svg>
+      <div class="head" style="margin:0">
+        <span class="eyebrow">How it matches</span>
+        <h2 id="dist-title">Meaning is distance.</h2>
+        <p class="quote">Is a raised bog <em>a peatland</em>? A machine measures how far apart the words are. <em>An ecologist knows.</em></p>
+        <div class="legend-rings">
+          <div><i style="background:color-mix(in srgb,var(--ols) 35%,transparent)"></i><span><b>Same thing</b> · closer than 0.85</span></div>
+          <div><i style="opacity:.75"></i><span><b>Close</b> · 0.70 to 0.85</span></div>
+          <div><i style="opacity:.45"></i><span><b>Related</b> · 0.55 to 0.70</span></div>
+        </div>
+        <p class="note">Positions are illustrative. This week, experts teach the model where the rings really are.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BRANCHES ============ -->
+  <section class="block" id="branches" aria-labelledby="branches-title">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Pick your branch</span>
+        <h2 id="branches-title">Three branches. Which one is yours?</h2>
+      </div>
+      <div class="branches">
+        <button class="bcard reveal" type="button" data-open="data">
+          <svg viewBox="0 0 300 120" aria-hidden="true"><g fill="none" stroke="var(--fg-2)" stroke-width="1.4"><path d="M40 90 Q 80 30 150 60 T 260 40"/></g><g fill="var(--gbif)"><circle cx="70" cy="62" r="5"/><circle cx="112" cy="48" r="5"/><circle cx="168" cy="64" r="5"/><circle cx="214" cy="52" r="5"/><circle cx="246" cy="42" r="5"/></g><circle cx="40" cy="90" r="12" fill="var(--amber)"/><path d="M262 30 a14 14 0 1 1 0 .1" fill="none" stroke="var(--amber)" stroke-width="2"/></svg>
+          <span class="tag">Branch · Data</span>
+          <h3>Grow the data</h3>
+          <p>Every protected species with real sightings. Every habitat in EUNIS terms.</p>
+          <span class="open">Open the story →</span>
+        </button>
+        <button class="bcard reveal" type="button" data-open="learn">
+          <svg viewBox="0 0 300 120" aria-hidden="true"><g fill="none" stroke="var(--fg-2)" stroke-width="1.4"><path d="M150 20 A 44 44 0 1 1 106 64" /><path d="M106 64 l-6 -10 m6 10 l 10 -6"/></g><circle cx="150" cy="20" r="10" fill="var(--amber)"/><g stroke="var(--ols)" stroke-width="3" fill="none" stroke-linecap="round"><path d="M138 66 l8 8 16 -18"/></g><text x="230" y="70" font-size="13" fill="var(--fg-2)" font-family="IBM Plex Mono, monospace">yes · no · fix</text></svg>
+          <span class="tag">Branch · Experts</span>
+          <h3>Teach it to learn</h3>
+          <p>Your judgement as an ecologist becomes the model's training.</p>
+          <span class="open">Open the story →</span>
+        </button>
+        <button class="bcard reveal" type="button" data-open="connect">
+          <svg viewBox="0 0 300 120" aria-hidden="true"><g stroke="var(--fg-2)" stroke-width="1.4"><line x1="80" y1="60" x2="150" y2="60"/><line x1="150" y1="60" x2="220" y2="60"/><line x1="150" y1="60" x2="150" y2="104"/></g><circle cx="80" cy="60" r="22" fill="none" stroke="var(--ols)" stroke-width="2"/><circle cx="220" cy="60" r="22" fill="none" stroke="var(--wikidata)" stroke-width="2"/><circle cx="150" cy="60" r="14" fill="var(--amber)"/><circle cx="150" cy="106" r="10" fill="none" stroke="var(--dbpedia)" stroke-width="2"/><g font-size="11" fill="var(--fg-2)" text-anchor="middle" font-family="IBM Plex Sans, sans-serif"><text x="80" y="64">microbes</text><text x="220" y="64">plants</text></g></svg>
+          <span class="tag">Branch · Community</span>
+          <h3>Connect the forest</h3>
+          <p>Link conservation to microbiome, plant and marine science.</p>
+          <span class="open">Open the story →</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE WEEK ============ -->
+  <section class="block" id="week" aria-labelledby="week-title">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">The week</span>
+        <h2 id="week-title">From seed to harvest in five days</h2>
+      </div>
+      <svg class="growline" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M10 40 C 120 40, 160 14, 250 30 S 420 46, 500 26 S 680 10, 750 30 S 900 44, 990 18"/></svg>
+      <div class="week">
+        <div class="day key reveal"><svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="36" cy="44" rx="10" ry="14"/><path d="M36 30c0-8 6-14 12-14"/><path d="M12 62h48"/></svg><span class="d">Mon 9</span><h3>Plant</h3><p>Pitch, onboarding, pick a branch</p></div>
+        <div class="day reveal"><svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M36 62V30"/><path d="M36 40c-10 0-16-6-16-14 10 0 16 6 16 14z"/><path d="M36 32c8 0 14-6 14-14-8 0-14 6-14 14z"/><path d="M12 62h48"/></svg><span class="d">Tue 10</span><h3>Grow</h3><p>Build in branches</p></div>
+        <div class="day reveal"><svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="24" cy="50" r="8"/><circle cx="44" cy="54" r="8"/><path d="M29 44 54 14M40 47 22 16"/></svg><span class="d">Wed 11</span><h3>Prune</h3><p>Look back, choose what matters</p></div>
+        <div class="day reveal"><svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 62C22 44 30 36 36 30"/><path d="M52 62C50 44 42 36 36 30"/><path d="M36 30V12"/><path d="M30 34h12" stroke-width="4"/></svg><span class="d">Thu 12</span><h3>Graft</h3><p>Join with MiCoKnowGraph</p></div>
+        <div class="day key reveal"><svg viewBox="0 0 72 72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 34h48l-6 26H18z"/><path d="M24 34c0-10 5-18 12-18s12 8 12 18"/><circle cx="30" cy="44" r="4"/><circle cx="42" cy="46" r="4"/></svg><span class="d">Fri 13</span><h3>Harvest</h3><p>Release, DOI, final show</p></div>
+      </div>
+      <p class="quote" style="margin-top:56px">Your impact: <em>the trees you plant</em> keep growing after Barcelona.</p>
+      <div class="gifts">
+        <div class="gift reveal"><b>A species, found</b><span>each link you make lets a researcher somewhere find it</span></div>
+        <div class="gift reveal"><b>A habitat, understood</b><span>legal codes that finally meet field and lab data</span></div>
+        <div class="gift reveal"><b>Knowledge that stays</b><span>open, citable, reused by the next team</span></div>
+        <div class="gift reveal"><b>A forest of people</b><span>ecologists and data people across ELIXIR</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARTNER ============ -->
+  <section class="block" id="partners" aria-labelledby="partners-title">
+    <div class="wrap">
+      <div class="partner reveal">
+        <svg viewBox="0 0 440 200" role="img" aria-label="VERDANT and MiCoKnowGraph share habitats and species">
+          <circle cx="150" cy="100" r="86" fill="color-mix(in srgb, var(--amber) 12%, transparent)" stroke="var(--amber)" stroke-width="1.6"/>
+          <circle cx="290" cy="100" r="86" fill="color-mix(in srgb, var(--ols) 12%, transparent)" stroke="var(--ols)" stroke-width="1.6"/>
+          <g font-size="14" font-weight="600" fill="var(--fg)" text-anchor="middle"><text x="110" y="96">VERDANT</text><text x="330" y="96">MiCoKnowGraph</text></g>
+          <g font-size="11" fill="var(--fg-2)" text-anchor="middle"><text x="110" y="114">protected nature</text><text x="330" y="114">microbiomes</text><text x="220" y="92">habitats</text><text x="220" y="108">species</text><text x="220" y="124">ENVO</text></g>
+        </svg>
+        <div>
+          <span class="eyebrow">Partner · Project 16</span>
+          <h2 id="partners-title" style="font-size:clamp(1.8rem,3.4vw,2.6rem);margin-top:10px">Where conservation meets the microbiome</h2>
+          <p class="lede" style="margin-top:12px">We build together on Thursday, and keep going after Barcelona. <a href="https://github.com/elixir-europe/biohackathon-projects-2026/blob/main/16.md" target="_blank" rel="noopener">MiCoKnowGraph →</a></p>
+        </div>
+      </div>
+      <div class="people">
+        <span><b>Jovana Dobreva</b> · Aalborg University · ELIXIR Denmark</span>
+        <span><b>James McLaughlin</b> · EMBL-EBI · ELIXIR UK</span>
+        <span><b>Miguel Rodriguez Rojas</b> · ELIXIR Denmark</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JOIN ============ -->
+  <section class="block join" id="join" aria-labelledby="join-title">
+    <div class="wrap">
+      <span class="eyebrow">Join us in Barcelona</span>
+      <h2 id="join-title" style="margin-top:18px">Every link is a small act of naming. <em>Come name things with us.</em></h2>
+      <div class="roles"><span>Ecologists</span><span>Botanists</span><span>Zoologists</span><span>Microbiologists</span><span>Conservation practitioners</span><span>Data curators</span><span>Developers</span></div>
+      <p class="lede" style="margin-bottom:28px">No ontology or coding experience needed. Your knowledge of living things is the missing piece.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="https://github.com/elixir-europe/biohackathon-projects-2026/blob/main/11.md" target="_blank" rel="noopener">View Project 11</a>
+        <a class="btn btn-ghost" href="https://biohackathon-europe.org/" target="_blank" rel="noopener">BioHackathon Europe</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>VERDANT · Vocabulary Enrichment &amp; Resolution of Diversity Annotations via Neural Technology</span>
+    <span>MIT licence · ELIXIR Denmark &amp; ELIXIR UK · 2026</span>
+  </div>
+</footer>
+
+<div class="story" id="story" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
+  <div class="story-card" id="story-card">
+    <div class="bars" id="bars" aria-hidden="true"></div>
+    <div class="story-top">
+      <div class="who">
+        <span class="badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22V12" stroke="var(--bark)" stroke-width="2.4" stroke-linecap="round"/><circle cx="7" cy="9" r="4.5" fill="var(--leaf-3)"/><circle cx="17" cy="9" r="4.5" fill="var(--leaf-2)"/><circle cx="12" cy="6" r="4.5" fill="var(--leaf-3)"/><circle cx="12" cy="6" r="1.6" fill="var(--amber)"/></svg></span>
+        <div><b id="story-title">Roots</b><small id="story-sub">VERDANT</small></div>
+      </div>
+      <div style="display:flex;gap:2px">
+        <button class="icon-btn" id="story-pause" type="button" aria-label="Pause auto-play"></button>
+        <button class="icon-btn" id="story-close" type="button" aria-label="Close story"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <button class="tapzone prev" type="button" tabindex="-1" aria-hidden="true"></button>
+    <button class="tapzone next" type="button" tabindex="-1" aria-hidden="true"></button>
+    <div class="story-body" id="story-body" aria-live="polite"></div>
+    <div class="story-nav">
+      <button class="btn btn-ghost" id="story-prev" type="button">Back</button>
+      <span class="count" id="story-count">1 / 4</span>
+      <button class="btn btn-primary" id="story-next" type="button">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- libraries: Motion (springs), GSAP + ScrollTrigger (scroll story), three.js (pollen layer) -->
+<script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/scroll.js"></script>
+<script src="js/pollen.js"></script>
+</body>
+</html>
